@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+description: Ethereum 2 deposit contract for the Pyrmont testnet
+repository: https://github.com/attestantio/eth2deposits-subgraph-pyrmont
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DepositContract
+    network: goerli
+    source:
+      address: "0x8c5fecdC472E27Bc447696F431E425D02dd46a8c"
+      abi: DepositContract
+      startBlock: 3743587
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Gravatar
+      abis:
+        - name: DepositContract
+          file: DepositContract/abis/DepositContract.abi
+      eventHandlers:
+        - event: DepositEvent(bytes,bytes,bytes,bytes,bytes)
+          handler: handleDepositEvent
+      file: DepositContract/DepositContract.wasm
